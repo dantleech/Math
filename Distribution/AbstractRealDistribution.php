@@ -49,7 +49,7 @@ use Hoa\Math\Analysis\UnivariateSolverUtil;
  *
  *    package org.apache.commons.math3.distribution.AbstractRealDistribution
  */
-abstract class AbstractRealDistribution implements RealDistribution, Serializable
+abstract class AbstractRealDistribution implements RealDistribution
 {
     /** 
      * Default accuracy.
