@@ -140,30 +140,33 @@ class TDistribution extends AbstractRealDistribution
     }
 
     /** {@inheritDoc} */
-    public double cumulativeProbability(double x) {
-        double ret;
-        if (x == 0) {
-            ret = 0.5;
-        } else {
-            double t =
-                Beta.regularizedBeta(
-                    degreesOfFreedom / (degreesOfFreedom + (x * x)),
-                    0.5 * degreesOfFreedom,
-                    0.5);
-            if (x < 0.0) {
-                ret = 0.5 * t;
-            } else {
-                ret = 1.0 - 0.5 * t;
-            }
+    public function cumulativeProbability($x)
+    {
+        if ($x == 0) {
+            return 0.5;
         }
 
-        return ret;
+        $t = Beta::regularizedBeta(
+            $this->degreesOfFreedom / ($this->degreesOfFreedom + ($x * $x)),
+            0.5 * $this->degreesOfFreedom,
+            0.5
+        );
+
+        if ($x < 0.0) {
+            $ret = 0.5 * $t;
+        } else {
+            $ret = 1.0 - 0.5 * $t;
+        }
+
+        return $ret;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    protected double getSolverAbsoluteAccuracy() {
-        return solverAbsoluteAccuracy;
+    /** 
+     * {@inheritDoc}
+     */
+    protected function getSolverAbsoluteAccuracy() 
+    {
+        return $this->solverAbsoluteAccuracy;
     }
 
     /**
@@ -175,14 +178,17 @@ class TDistribution extends AbstractRealDistribution
      * <li>else undefined ({@code Double.NaN}).</li>
      * </ul>
      */
-    public double getNumericalMean() {
-        final double df = getDegreesOfFreedom();
+    public double getNumericalMean() 
+    {
+        $df = $this->getDegreesOfFreedom();
 
-        if (df > 1) {
+        if ($df > 1) {
             return 0;
         }
 
-        return Double.NaN;
+        // todo: Should we make Value objects?
+        // return Double.NaN;
+        return null;
     }
 
     /**
@@ -196,18 +202,22 @@ class TDistribution extends AbstractRealDistribution
      *  <li>else undefined ({@code Double.NaN}).</li>
      * </ul>
      */
-    public double getNumericalVariance() {
-        final double df = getDegreesOfFreedom();
+    public function getNumericalVariance() 
+    {
+        $df = $this->getDegreesOfFreedom();
 
-        if (df > 2) {
-            return df / (df - 2);
+        if ($df > 2) {
+            return $df / ($df - 2);
         }
 
-        if (df > 1 && df <= 2) {
-            return Double.POSITIVE_INFINITY;
+        if ($df > 1 && $df <= 2) {
+            // TODO: value objects?
+            // return Double.POSITIVE_INFINITY;
+            return PHP_INT_MAX;
         }
 
-        return Double.NaN;
+        //return Double.NaN;
+        return null;
     }
 
     /**
@@ -219,8 +229,10 @@ class TDistribution extends AbstractRealDistribution
      * @return lower bound of the support (always
      * {@code Double.NEGATIVE_INFINITY})
      */
-    public double getSupportLowerBound() {
-        return Double.NEGATIVE_INFINITY;
+    public function getSupportLowerBound()
+    {
+        //return Double.NEGATIVE_INFINITY;
+        return - PHP_INT_MAX;
     }
 
     /**
@@ -232,17 +244,21 @@ class TDistribution extends AbstractRealDistribution
      * @return upper bound of the support (always
      * {@code Double.POSITIVE_INFINITY})
      */
-    public double getSupportUpperBound() {
-        return Double.POSITIVE_INFINITY;
+    public function getSupportUpperBound() 
+    {
+        //return Double.POSITIVE_INFINITY;
+        return PHP_INT_MAX;
     }
 
     /** {@inheritDoc} */
-    public boolean isSupportLowerBoundInclusive() {
+    public function isSupportLowerBoundInclusive()
+    {
         return false;
     }
 
     /** {@inheritDoc} */
-    public boolean isSupportUpperBoundInclusive() {
+    public function isSupportUpperBoundInclusive() 
+    {
         return false;
     }
 
@@ -253,7 +269,8 @@ class TDistribution extends AbstractRealDistribution
      *
      * @return {@code true}
      */
-    public boolean isSupportConnected() {
+    public function isSupportConnected()
+    {
         return true;
     }
 }

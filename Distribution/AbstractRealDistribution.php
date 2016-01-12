@@ -55,7 +55,7 @@ abstract class AbstractRealDistribution implements RealDistribution
      * Default accuracy.
      * @var int
      */
-    const SOLVER_DEFAULT_ABSOLUTE_ACCURACY = 0.000001;
+    const SOLVER_DEFAULT_ABSOLUTE_ACCURACY = 1E-6;
 
     /**
      * Random instance used to generate samples from the distribution.
